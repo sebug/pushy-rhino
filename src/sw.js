@@ -9,7 +9,13 @@ self.addEventListener('install', (event) => {
             '/',
             '/index.html',
             'main.js',
-            'style.css'
+            'style.css',
+	    'img/icon48.png',
+	    'img/icon72.png',
+	    'img/icon96.png',
+	    'img/icon144.png',
+	    'img/icon168.png',
+	    'img/icon192.png'
         ])
     );
 });
