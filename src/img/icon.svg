@@ -9,6 +9,9 @@
    id="svg5"
    inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
    sodipodi:docname="icon.svg"
+   inkscape:export-filename="icon48.png"
+   inkscape:export-xdpi="8.011797"
+   inkscape:export-ydpi="8.011797"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -88,14 +91,14 @@
        xml:space="preserve"
        transform="scale(0.26458333)"
        id="text443"
-       style="fill:#000000;white-space:pre;shape-inside:url(#rect445)" />
+       style="white-space:pre;shape-inside:url(#rect445);display:inline;fill:#000000" />
     <text
        xml:space="preserve"
        transform="matrix(9.4300633,0,0,8.6064627,-2895.7117,-3279.7327)"
        id="text501"
-       style="white-space:pre;shape-inside:url(#rect503);fill:#000000"><tspan
+       style="white-space:pre;shape-inside:url(#rect503);display:inline;fill:#000000"><tspan
          x="316.75"
          y="400.63351"
-         id="tspan570">R</tspan></text>
+         id="tspan585">R</tspan></text>
   </g>
 </svg>
