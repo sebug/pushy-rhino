@@ -29,7 +29,7 @@ const cacheFirst = async (request) => {
     return fetch(request);
 };
 
-const fillInTemplate(request) {
+const fillInTemplate = async (request) => {
     let response = await cacheFirst(request);
 
     if (request.url && request.url.toLowerCase().indexOf('messages.html') >= 0)
