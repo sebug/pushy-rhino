@@ -34,7 +34,7 @@ const fillInTemplate = async (request) => {
 
     if (request.url && request.url.toLowerCase().indexOf('messages.html') >= 0)
     {
-        const responseText = await response.text();
+        let responseText = await response.text();
         responseText = responseText.replace('<!-- messages-placeholder -->', '<ul><li>First Message</li></ul>');
         response = new Response(responseText, response);
     }
