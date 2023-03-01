@@ -17,7 +17,8 @@ const openMainDB = () => {
             let messageIDIndex;
             if (event.oldVersion < 1) {
                 messageObjectStore = db.createObjectStore('messages', {
-                    keyPath: "messageID"
+                    keyPath: "messageID",
+                    autoIncrement: true
                 });
             }
             if (event.oldVersion < 2) {
