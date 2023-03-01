@@ -26,7 +26,14 @@ if (registerButton) {
         console.log(appKey);
         if (window.Notification) {
             let requestPermissionResult = await window.Notification.requestPermission();
-            console.log(requestPermissionResult);
+            if (requestPermissionResult === 'granted') {
+                const serviceWorkerRegistration = await navigator.serviceWorker.ready;
+                const pushSubscription = await serviceWorkerRegistration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: appKey
+                });
+                console.log(pushSubscription);
+            }
         }
     });
 }
