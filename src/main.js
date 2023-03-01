@@ -30,7 +30,7 @@ if (registerButton) {
                 const serviceWorkerRegistration = await navigator.serviceWorker.ready;
                 const pushSubscription = await serviceWorkerRegistration.pushManager.subscribe({
                     userVisibleOnly: true,
-                    applicationServerKey: appKey.buffer
+                    applicationServerKey: appKey
                 });
                 console.log(pushSubscription);
             }
