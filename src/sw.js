@@ -4,7 +4,7 @@ const openMainDB = () => {
             reject('IndexedDB not available.');
             return;
         }
-        let openDBRequest = self.indexedDB.open('messages', 1);
+        let openDBRequest = self.indexedDB.open('messages', 2);
         openDBRequest.onerror = (event) => {
             reject(event);
         };
@@ -14,10 +14,17 @@ const openMainDB = () => {
         openDBRequest.onupgradeneeded = (event) => {
             let db = openDBRequest.result;
             let messageObjectStore;
+            let messageIDIndex;
             if (event.oldVersion < 1) {
                 messageObjectStore = db.createObjectStore('messages', {
                     keyPath: "messageID"
                 });
+            }
+            if (event.oldVersion < 2) {
+                if (!messageObjectStore) {
+                    messageObjectStore = openDBRequest.transaction.objectStore('messages');
+                }
+                messageIDIndex = messageObjectStore.createIndex('by_messageID', [ 'messageID' ]);
             }
         };
     });
@@ -86,7 +93,7 @@ const fillInTemplate = async (request) => {
     if (request.url && request.url.toLowerCase().indexOf('messages.html') >= 0)
     {
         let responseText = await response.text();
-        let messages = await getAllByObjectStoreNameIndex('messages', 'messageID');
+        let messages = await getAllByObjectStoreNameIndex('messages', 'by_messageID');
         console.log(messages);
 
         let replacementText = '<ul>';
