@@ -21,11 +21,11 @@ registerServiceWorker();
 
 let registerButton = document.querySelector('.register-for-push');
 if (registerButton) {
-    registerButton.addEventListener('click', (ev) => {
-        const appKey = new Uint8Array(atob('MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEOx4QkFrSTUI5iUxj25v7r5kcxcvAgwTvfQM+pLzIVRcTVFDIG0Vozkm/rh+JNd5UbqLM3PPfNHPBbqQzoZivLA=='));
+    registerButton.addEventListener('click', async (ev) => {
+        const appKey = Uint8Array.from(atob('MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEOx4QkFrSTUI5iUxj25v7r5kcxcvAgwTvfQM+pLzIVRcTVFDIG0Vozkm/rh+JNd5UbqLM3PPfNHPBbqQzoZivLA=='), c => c.charCodeAt(0));
         console.log(appKey);
         if (window.Notification) {
-            let requestPermissionResult = window.Notification.requestPermission();
+            let requestPermissionResult = await window.Notification.requestPermission();
             console.log(requestPermissionResult);
         }
     });
