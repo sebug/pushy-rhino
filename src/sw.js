@@ -23,7 +23,7 @@ const openMainDB = () => {
             }
             if (event.oldVersion < 2) {
                 if (!messageObjectStore) {
-                    messageObjectStore = openDBRequest.transaction().objectStore('messages');
+                    messageObjectStore = openDBRequest.transaction.objectStore('messages');
                 }
                 messageIDIndex = messageObjectStore.createIndex('by_messageID', [ 'messageID' ]);
             }
