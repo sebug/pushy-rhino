@@ -1,3 +1,54 @@
+const openMainDB = () => {
+    return new Promise((resolve, reject) => {
+        if (!self.indexedDB) {
+            reject('IndexedDB not available.');
+            return;
+        }
+        let openDBRequest = self.indexedDB.open('messages', 1);
+        openDBRequest.onerror = (event) => {
+            reject(event);
+        };
+        openDBRequest.onsuccess = (event) => {
+            resolve(openDBRequest.result);
+        };
+        openDBRequest.onupgradeneeded = (event) => {
+            let db = openDBRequest.result;
+            let messageObjectStore;
+            if (event.oldVersion < 1) {
+                messageObjectStore = db.createObjectStore('messages', {
+                    keyPath: "messageID"
+                });
+            }
+        };
+    });
+};
+
+const getAllByObjectStoreNameIndex = async (objectStoreName, indexName) => {
+    let db = await openMainDB();
+    return await new Promise((resolve, reject) => {
+        try {
+            let objectStore = db.transaction(objectStoreName, 'readonly').objectStore(objectStoreName);
+            let index = objectStore.index(indexName);
+            let cursorRequest = index.openCursor();
+            let entries = [];
+            cursorRequest.onsuccess = (ev) => {
+                let cursor = cursorRequest.result;
+                if (cursor) {
+                    entries.push(cursor.value);
+                    cursor.continue();
+                } else {
+                    resolve(entries);
+                }
+            };
+            cursorRequest.onerror = (err) => {
+                resolve(err);
+            };
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
 const addResourcesToCache = async (resources) => {
     const cache = await caches.open('v1');
     await cache.addAll(resources);
@@ -35,7 +86,16 @@ const fillInTemplate = async (request) => {
     if (request.url && request.url.toLowerCase().indexOf('messages.html') >= 0)
     {
         let responseText = await response.text();
-        responseText = responseText.replace('<!-- messages-placeholder -->', '<ul><li>First Message</li></ul>');
+        let messages = await getAllByObjectStoreNameIndex('messages', 'messageID');
+        console.log(messages);
+
+        let replacementText = '<ul>';
+        for (let message of messages) {
+            replacementText += '<li>' + message.content + '</li>';
+        }
+        replacementText += '</ul>';
+
+        responseText = responseText.replace('<!-- messages-placeholder -->', replacementText);
         response = new Response(responseText, response);
     }
 
