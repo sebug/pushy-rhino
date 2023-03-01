@@ -31,25 +31,17 @@ const openMainDB = () => {
     });
 };
 
-const getAllByObjectStoreNameIndex = async (objectStoreName, indexName) => {
+const getAllByObjectStoreName = async (objectStoreName) => {
     let db = await openMainDB();
     return await new Promise((resolve, reject) => {
         try {
             let objectStore = db.transaction(objectStoreName, 'readonly').objectStore(objectStoreName);
-            let index = objectStore.index(indexName);
-            let cursorRequest = index.openCursor();
-            let entries = [];
-            cursorRequest.onsuccess = (ev) => {
-                let cursor = cursorRequest.result;
-                if (cursor) {
-                    entries.push(cursor.value);
-                    cursor.continue();
-                } else {
-                    resolve(entries);
-                }
+            let getAllResult = objectStore.getAll();
+            getAllResult.onsuccess = (ev) => {
+                resolve(ev.target.result);
             };
-            cursorRequest.onerror = (err) => {
-                resolve(err);
+            getAllResult.onerror = (err) => {
+                reject(err);
             };
         } catch (e) {
             reject(e);
@@ -94,7 +86,7 @@ const fillInTemplate = async (request) => {
     if (request.url && request.url.toLowerCase().indexOf('messages.html') >= 0)
     {
         let responseText = await response.text();
-        let messages = await getAllByObjectStoreNameIndex('messages', 'by_messageID');
+        let messages = await getAllByObjectStoreName('messages');
         console.log(messages);
 
         let replacementText = '<ul>';
