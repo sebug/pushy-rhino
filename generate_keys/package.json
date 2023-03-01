@@ -1,0 +1,14 @@
+{
+  "name": "generate_keys",
+  "version": "1.0.0",
+  "description": "Package to generate the vapid keys we need for web push",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sebastian Gfeller",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "web-push": "^3.5.0"
+  }
+}
