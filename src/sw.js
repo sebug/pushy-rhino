@@ -90,7 +90,8 @@ const fillInTemplate = async (request) => {
         console.log(messages);
 
         let replacementText = '<ul>';
-        for (let message of messages) {
+        for (let i = messages.length - 1; i >= 0; i -= 1) {
+            let message = messages[i];
             replacementText += '<li>' + message.content + '</li>';
         }
         replacementText += '</ul>';
