@@ -33,7 +33,7 @@ async function sendNotification(context, message, publicKey, privateKey) {
         let entitiesIter = tableClient.listEntities();
         let entityItem = await entitiesIter.next();
         while (!entityItem.done) {
-            const entity = entitiesIter.value;
+            const entity = entityItem.value;
             let options = {
                 vapidDetails: {
                     subject: 'https://ashy-sky-0a409fd03.2.azurestaticapps.net/',
