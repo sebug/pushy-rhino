@@ -110,5 +110,10 @@ self.addEventListener('fetch', (event) => {
 });
 
 self.addEventListener('push', (event) => {
-    console.log(event.data);
+    const payload = event.data?.text() ?? "no payload";
+    event.waitUntil(
+        self.registration.showNotification("Pushy Rhino", {
+        body: payload,
+        })
+    );
 });
