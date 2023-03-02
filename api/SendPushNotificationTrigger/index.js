@@ -43,7 +43,7 @@ async function sendNotification(context, message, publicKey, privateKey) {
         let pushSubscription = {
             endpoint: entity.endpoint,
             keys: {
-                authKey: entity.authKey,
+                auth: entity.authKey,
                 p256dh: entity.p256dh
             }
         };
