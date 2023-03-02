@@ -1,4 +1,5 @@
 const { parse } = require('qs');
+const webpush = require('web-push');
 
 async function sendNotification(context, message, publicKey, privateKey) {
     try {
@@ -7,6 +8,11 @@ async function sendNotification(context, message, publicKey, privateKey) {
         const suffix = process.env.TABLES_STORAGE_ENDPOINT_SUFFIX;
     
         const url = 'https://' + account + '.table.' + suffix;
+
+        const urlSafePublicKey = publicKey.replaceAll('+', '-')
+            .replaceAll('/', '_');
+        const urlSafePrivateKey = privateKey.replaceAll('+', '-')
+        .replaceAll('/', '_');
     
         const credential = new AzureNamedKeyCredential(account, accountKey);
         const serviceClient = new TableServiceClient(
@@ -25,7 +31,21 @@ async function sendNotification(context, message, publicKey, privateKey) {
         const tableClient = new TableClient(url, tableName, credential);
         let entitiesIter = tableClient.listEntities();
         for await (const entity of entitiesIter) {
-            
+            let options = {
+                vapidDetails: {
+                    subject: 'https://ashy-sky-0a409fd03.2.azurestaticapps.net/',
+                    publicKey: urlSafePublicKey,
+                    privateKey: urlSafePrivateKey
+                }
+            };
+            let pushSubscription = {
+                endpoint: entity.endpoint,
+                keys: {
+                    authKey: entity.authKey,
+                    p256dh: entity.p256dh
+                }
+            };
+            webpush.sendNotification(pushSubscription, message, options);
         }
     } catch (err) {
         context.log(err);
