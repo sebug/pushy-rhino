@@ -1,5 +1,6 @@
 const { parse } = require('qs');
 const webpush = require('web-push');
+const { TableServiceClient, AzureNamedKeyCredential, TableClient } = require("@azure/data-tables");
 
 async function sendNotification(context, message, publicKey, privateKey) {
     try {
