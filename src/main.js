@@ -32,7 +32,17 @@ if (registerButton) {
                     userVisibleOnly: true,
                     applicationServerKey: appKey
                 });
-                console.log(pushSubscription);
+                let registerResponse = await fetch('/api/RegisterForPushNotificationTrigger', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        endpoint: pushSubscription.endpoint
+                    },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    })
+                })
+                let registerObject = await registerResponse.json();
+                console.log(registerObject);
             }
         }
     });
