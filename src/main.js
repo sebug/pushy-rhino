@@ -36,10 +36,10 @@ if (registerButton) {
                     method: 'POST',
                     body: JSON.stringify({
                         endpoint: pushSubscription.endpoint
-                    },
+                    }),
                     headers: {
                         'Content-Type': 'application/json'
-                    })
+                    }
                 })
                 let registerObject = await registerResponse.json();
                 console.log(registerObject);
