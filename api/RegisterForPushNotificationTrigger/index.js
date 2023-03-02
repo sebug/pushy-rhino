@@ -1,3 +1,5 @@
+const AzureTables = require("@azure/data-tables");
+
 module.exports = async function (context, req) {
     context.log('Register push notification processed a request.');
 
@@ -13,6 +15,6 @@ module.exports = async function (context, req) {
 
     context.res = {
         // status: 200, /* Defaults to 200 */
-        body: 'Registered endpoint ' + endpoint
+        body: 'Registered endpoint ' + endpoint + ' store in ' + process.env.TABLES_STORAGE_ENDPOINT_SUFFIX
     };
 }
