@@ -24,9 +24,11 @@ async function insertEndpoint(endpoint, context) {
             }
         });
         const tableClient = new TableClient(url, tableName, credential);
+        const rowKey = endpoint.replace(/\//g, '_');
+
         let entity = {
             partitionKey: "Prod",
-            rowKey: endpoint,
+            rowKey: rowKey,
             endpoint: endpoint,
             status: 'active'
         };
