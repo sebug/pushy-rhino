@@ -49,8 +49,7 @@ async function sendNotification(context, message, publicKey, privateKey) {
                 }
             };
             webpush.sendNotification(pushSubscription, message, options);
-            //entityItem = await entitiesIter.next();
-            entityItem = null;
+            entityItem = await entitiesIter.next();
         }
     } catch (err) {
         context.log(err);
