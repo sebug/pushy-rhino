@@ -32,7 +32,7 @@ async function sendNotification(context, message, publicKey, privateKey) {
         const tableClient = new TableClient(url, tableName, credential);
         let entitiesIter = tableClient.listEntities();
         let entityItem = await entitiesIter.next();
-        while (!entityItem.done) {
+        while (entityItem && !entityItem.done && entityItem.value) {
             const entity = entityItem.value;
             let options = {
                 vapidDetails: {
@@ -49,7 +49,8 @@ async function sendNotification(context, message, publicKey, privateKey) {
                 }
             };
             webpush.sendNotification(pushSubscription, message, options);
-            entityItem = await entitiesIter.next();
+            //entityItem = await entitiesIter.next();
+            entityItem = null;
         }
     } catch (err) {
         context.log(err);
