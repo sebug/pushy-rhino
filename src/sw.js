@@ -108,3 +108,7 @@ self.addEventListener('fetch', (event) => {
     console.log(event.request);
     event.respondWith(fillInTemplate(event.request));
 });
+
+self.addEventListener('push', (event) => {
+    console.log(event.data);
+});
