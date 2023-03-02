@@ -50,18 +50,18 @@ module.exports = async function (context, req) {
         return;
     }
 
-
-    insertEndpoint(endpoint, context).then(function () {
+    try {
+        const insertEndpointResult = await insertEndpoint(endpoint, context);
         context.res = {
             // status: 200, /* Defaults to 200 */
             body: {
                 endpoint: endpoint
             }
         };
-    }, function (err) {
+    } catch (err) {
         context.res = {
             status: 500,
-            body: '' + err
+            body: err
         };
-    });
+    }
 }
