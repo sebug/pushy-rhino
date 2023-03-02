@@ -50,7 +50,7 @@ const getAllByObjectStoreName = async (objectStoreName) => {
 };
 
 const addResourcesToCache = async (resources) => {
-    const cache = await caches.open('v4');
+    const cache = await caches.open('v5');
     await cache.addAll(resources);
 };
 
@@ -67,7 +67,8 @@ self.addEventListener('install', (event) => {
 	    'img/icon144.png',
 	    'img/icon168.png',
 	    'img/icon192.png',
-        'messages.html'
+        'messages.html',
+        'send_notification.html'
         ])
     );
 });

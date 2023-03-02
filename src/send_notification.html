@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Pushy Rhino - Send Notification</title>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="manifest" href="manifest.json" />
+    </head>
+    <body>
+        <h1>Pushy Rhino - Send Notification</h1>
+        <form method="post" action="/api/SendPushNotificationTrigger">
+            <p><label for="message">Message:
+            </label></p>
+            <textarea id="messsage" name="message" required="required"></textarea>
+            <p><label for="privatekey">Private Key</label></p>
+            <textarea id="privatekey" name="privatekey" required="required"></textarea>
+            <input type="hidden" name="publickey" value="BFMJcMisQcwup7ZplWPM4dWcFwtmK3FsR7n7JoRREpdzyaawdZ1HiUrFInjgHsZjcezCuM0hayxURDC3C4QJr5Q" />
+            <button type="submit">Send message</button>
+        </form>
+
+        <script type="module" src="main.js"></script>
+    </body>
+</html>
