@@ -34,9 +34,7 @@ if (registerButton) {
                 });
                 let registerResponse = await fetch('/api/RegisterForPushNotificationTrigger', {
                     method: 'POST',
-                    body: JSON.stringify({
-                        endpoint: pushSubscription.endpoint
-                    }),
+                    body: JSON.stringify(pushSubscription),
                     headers: {
                         'Content-Type': 'application/json'
                     }
