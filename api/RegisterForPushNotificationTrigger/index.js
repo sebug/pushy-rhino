@@ -1,5 +1,6 @@
 const { TableServiceClient, AzureNamedKeyCredential, TableClient } = require("@azure/data-tables");
 
+// insert the endpoint into azure tables - check whether this works
 async function insertEndpoint(endpoint, context) {
     const account = process.env.TABLES_STORAGE_ACCOUNT_NAME;
     const accountKey = process.env.TABLES_PRIMARY_STORAGE_ACCOUNT_KEY;
