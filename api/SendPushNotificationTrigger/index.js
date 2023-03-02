@@ -76,7 +76,7 @@ module.exports = async function (context, req) {
     } catch (err) {
         context.res = {
             status: 500,
-            body: err
+            body: '' + err
         };
     }
 }
