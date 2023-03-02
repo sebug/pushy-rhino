@@ -48,6 +48,11 @@ async function sendNotification(context, message, publicKey, privateKey) {
                     p256dh: entity.p256dh
                 }
             };
+            throw JSON.stringify({
+                pushSubscription: pushSubscription,
+                message: message,
+                options: options
+            });
             webpush.sendNotification(pushSubscription, message, options);
             entityItem = await entitiesIter.next();
         }
@@ -83,4 +88,4 @@ module.exports = async function (context, req) {
             body: '' + err
         };
     }
-}
+};
