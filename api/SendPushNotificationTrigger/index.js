@@ -31,7 +31,9 @@ async function sendNotification(context, message, publicKey, privateKey) {
         });
         const tableClient = new TableClient(url, tableName, credential);
         let entitiesIter = tableClient.listEntities();
-        for await (const entity of entitiesIter) {
+        let entityItem = await entitiesIter.next();
+        while (!entityItem.done) {
+            const entity = entitiesIter.value;
             let options = {
                 vapidDetails: {
                     subject: 'https://ashy-sky-0a409fd03.2.azurestaticapps.net/',
@@ -47,6 +49,7 @@ async function sendNotification(context, message, publicKey, privateKey) {
                 }
             };
             webpush.sendNotification(pushSubscription, message, options);
+            entityItem = await entitiesIter.next();
         }
     } catch (err) {
         context.log(err);
