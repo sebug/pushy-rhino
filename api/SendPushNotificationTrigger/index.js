@@ -1,4 +1,4 @@
-import { parse } from 'qs';
+const { parse } = require('qs');
 
 module.exports = async function (context, req) {
     try {
