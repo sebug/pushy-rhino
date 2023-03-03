@@ -4,7 +4,7 @@ const openMainDB = () => {
             reject('IndexedDB not available.');
             return;
         }
-        let openDBRequest = self.indexedDB.open('messages', 2);
+        let openDBRequest = self.indexedDB.open('messages', 3);
         openDBRequest.onerror = (event) => {
             reject(event);
         };
@@ -113,7 +113,7 @@ const insertMessage = async (message) => {
     let db = await openMainDB();
     return await new Promise((resolve, reject) => {
         try {
-            let objectStore = db.transaction('messages', 'readonly').objectStore('messages');
+            let objectStore = db.transaction(['messages'], 'readwrite').objectStore('messages');
             let insertResult = objectStore.add({
                 content: message
             });
