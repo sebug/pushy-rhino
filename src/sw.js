@@ -142,6 +142,6 @@ const saveAndShowNotification = async (event) => {
 
 self.addEventListener('push', (event) => {
     event.waitUntil(
-        saveAndShowNotification()
+        saveAndShowNotification(event)
     );
 });
