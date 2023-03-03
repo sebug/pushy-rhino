@@ -6,6 +6,7 @@ async function sendNotification(context, message, publicKey, privateKey) {
     const account = process.env.TABLES_STORAGE_ACCOUNT_NAME;
     const accountKey = process.env.TABLES_PRIMARY_STORAGE_ACCOUNT_KEY;
     const suffix = process.env.TABLES_STORAGE_ENDPOINT_SUFFIX;
+    const subject = process.env.PUSH_SUBJECT;
 
     const url = 'https://' + account + '.table.' + suffix;
 
@@ -35,7 +36,7 @@ async function sendNotification(context, message, publicKey, privateKey) {
         const entity = entityItem.value;
         let options = {
             vapidDetails: {
-                subject: 'https://ashy-sky-0a409fd03.2.azurestaticapps.net/',
+                subject: subject,
                 publicKey: urlSafePublicKey,
                 privateKey: urlSafePrivateKey
             }
@@ -47,7 +48,7 @@ async function sendNotification(context, message, publicKey, privateKey) {
                 p256dh: entity.p256dh
             }
         };
-        webpush.sendNotification(pushSubscription, message, options);
+        let pushResponse = await webpush.sendNotification(pushSubscription, message, options);
         entityItem = await entitiesIter.next();
     }
 }
