@@ -50,7 +50,7 @@ const getAllByObjectStoreName = async (objectStoreName) => {
 };
 
 const addResourcesToCache = async (resources) => {
-    const cache = await caches.open('v8');
+    const cache = await caches.open('v9');
     await cache.addAll(resources);
 };
 
