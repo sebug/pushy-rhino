@@ -136,7 +136,13 @@ const saveAndShowNotification = async (event) => {
         await insertMessage(payload);
     }
     return await self.registration.showNotification("Pushy Rhino", {
-        body: payload
+        body: payload,
+        actions: [
+            {
+                action: '/messages.html',
+                title: 'Go to messages'
+            }
+        ]
     });
 };
 
