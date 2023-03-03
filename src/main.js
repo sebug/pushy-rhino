@@ -47,6 +47,7 @@ if (registerButton) {
 }
 
 // Also, allow to update the messages page with new notifications without reload
+// only on the messages page
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('message', (event) => {
         console.log(event);
