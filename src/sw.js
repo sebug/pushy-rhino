@@ -154,6 +154,7 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', async (ev) => {
     let url = ev.action || '/messages.html';
+    url = new URL(url, self.location.origin).href;
     let clientList = ev.waitUntil(clients.matchAll({
         type: "window"
     }));
