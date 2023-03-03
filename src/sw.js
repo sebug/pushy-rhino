@@ -151,3 +151,11 @@ self.addEventListener('push', (event) => {
         saveAndShowNotification(event)
     );
 });
+
+self.addEventListener('notificationclick', async (ev) => {
+    if (!ev.action) {
+        return;
+    }
+
+    clients.openWindow(ev.action);
+});
