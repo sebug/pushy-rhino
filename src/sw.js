@@ -172,9 +172,9 @@ self.addEventListener('push', (event) => {
 self.addEventListener('notificationclick', async (ev) => {
     let url = ev.action || '/messages.html';
     url = new URL(url, self.location.origin).href;
-    let clientList = ev.waitUntil(clients.matchAll({
+    let clientList = await clients.matchAll({
         type: "window"
-    }));
+    });
     for (const client of clientList) {
         if (client.url === url && 'focus' in client) {
           return client.focus();
