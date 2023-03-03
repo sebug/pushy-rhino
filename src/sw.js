@@ -153,9 +153,11 @@ self.addEventListener('push', (event) => {
 });
 
 self.addEventListener('notificationclick', async (ev) => {
-    if (!ev.action) {
-        clients.openWindow('/messages.html');
+    let url = ev.action || '/messages.html';
+    for (const client of clientList) {
+        if (client.url === url && 'focus' in client) {
+          return client.focus();
+        }
     }
-
-    clients.openWindow(ev.action);
+    return clients.openWindow(url);
 });
