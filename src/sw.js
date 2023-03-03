@@ -154,7 +154,7 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', async (ev) => {
     if (!ev.action) {
-        return;
+        clients.openWindow('/messages.html');
     }
 
     clients.openWindow(ev.action);
