@@ -45,3 +45,18 @@ if (registerButton) {
         }
     });
 }
+
+// Also, allow to update the messages page with new notifications without reload
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+        console.log(event);
+        if (location.href.toLowerCase().indexOf('messages.html') >= 0) {
+            let theList = document.querySelector('ul');
+            if (theList) {
+                let li = document.createElement('li');
+                li.innerText = event.data.msg;
+                theList.prepend(li);
+            }
+        }
+    });
+}

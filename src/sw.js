@@ -50,7 +50,7 @@ const getAllByObjectStoreName = async (objectStoreName) => {
 };
 
 const addResourcesToCache = async (resources) => {
-    const cache = await caches.open('v7');
+    const cache = await caches.open('v8');
     await cache.addAll(resources);
 };
 
@@ -151,6 +151,18 @@ const saveAndShowNotification = async (event) => {
         } catch (appBadgeError) {
             // no worries, we do not need this
         }
+    }
+    try {
+        let clientList = await clients.matchAll({
+            type: "window"
+        });
+        for (const client of clientList) {
+            client.postMessage({
+                msg: payload
+            });
+        }
+    } catch (sendMessageError) {
+        console.log(sendMessageError);
     }
     return await self.registration.showNotification("Pushy Rhino", {
         body: payload,
