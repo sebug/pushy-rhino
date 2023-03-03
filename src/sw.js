@@ -98,6 +98,16 @@ const fillInTemplate = async (request) => {
         replacementText += '</ul>';
 
         responseText = responseText.replace('<!-- messages-placeholder -->', replacementText);
+
+        // we are rendering the messages page, clear the app badges
+        if (navigator && navigator.clearAppBadge) {
+            try {
+                await navigator.clearAppBadge();
+            } catch (appBadgeError) {
+                // no worries, we do not need this
+            }
+        }
+
         response = new Response(responseText, response);
     }
 
@@ -134,6 +144,13 @@ const saveAndShowNotification = async (event) => {
     if (payload !== 'no payload') {
         // store in messages DB
         await insertMessage(payload);
+    }
+    if (navigator && navigator.setAppBadge) {
+        try {
+            await navigator.setAppBadge(1);
+        } catch (appBadgeError) {
+            // no worries, we do not need this
+        }
     }
     return await self.registration.showNotification("Pushy Rhino", {
         body: payload,
