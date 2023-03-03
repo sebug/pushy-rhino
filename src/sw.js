@@ -109,11 +109,39 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(fillInTemplate(event.request));
 });
 
-self.addEventListener('push', (event) => {
+const insertMessage = async (message) => {
+    let db = await openMainDB();
+    return await new Promise((resolve, reject) => {
+        try {
+            let objectStore = db.transaction('messages', 'readonly').objectStore('messages');
+            let insertResult = objectStore.add({
+                content: message
+            });
+            insertResult.onsuccess = (ev) => {
+                resolve(message);
+            };
+            insertResult.onerror = (err) => {
+                reject(err);
+            };
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+const saveAndShowNotification = async (event) => {
     const payload = event.data?.text() ?? "no payload";
+    if (payload !== 'no payload') {
+        // store in messages DB
+        await insertMessage(payload);
+    }
+    return await self.registration.showNotification("Pushy Rhino", {
+        body: payload
+    });
+};
+
+self.addEventListener('push', (event) => {
     event.waitUntil(
-        self.registration.showNotification("Pushy Rhino", {
-        body: payload,
-        })
+        saveAndShowNotification()
     );
 });
